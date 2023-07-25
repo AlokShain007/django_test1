@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block start %}
+
+<form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Login</h2>
+
+    {% if messages %}
+    
+    <div class="alert alert-primary" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    
+        <div class="form-group">
+          <label >User Name</label>
+          <input type="text" class="form-control" name="username" >
+          
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password">
+ 
+        </div>
+        <div class="form-group form-check">
+        
+          <small id="emailHelp" class="form-text text-muted">if not login then !  <a href="/register/">Register</a></small>
+         
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+<script>
+    // Check if the user is authenticated (logged in)
+    const isAuthenticated = "{{ request.user.is_authenticated }}";
+
+    // If the user is authenticated, redirect to the home page on back button click
+    if (isAuthenticated) {
+        window.addEventListener("popstate", function () {
+            window.location.href = "/";
+        });
+    }
+</script>
+
+{% endblock %}

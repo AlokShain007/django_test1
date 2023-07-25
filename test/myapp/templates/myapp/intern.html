@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+
+  {% if user.is_authenticated %} {# Check if the user is logged in #}
+  <form class="col-6 mx-auto card p-3 shadow-lg form-transparent" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="text-white">Intern Details</h2>
+    <hr>
+    <div class="mb-3">
+      <label class="form-label text-white">Intern Name</label>
+      <input required name="intern_name" type="text" class="form-control shadow-effect text-white">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-white">Intern Details</label>
+      <textarea required name="intern_details" class="form-control shadow-effect text-white"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Add Interns</button>
+  </form>
+  <br>
+  {% endif %}
+
+  <table class="table table-dark table-striped table-hover table-transparent">
+    <thead>
+      <tr>
+        <th scope="col">Id </th>
+        <th scope="col">Intern Name</th>
+        <th scope="col">Intern Details</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in intern %}
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{e.intern_name}}</td>
+        <td>{{e.intern_details}}</td>
+        <td>
+          {% if user.is_authenticated %} {# Check if the user is logged in #}
+          <a href="{% url 'delete_intern' e.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this intern?')">Delete</a>
+    
+          <a href="/update-intern/{{ e.id }}" class="btn  btn-success">Update</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+
+<script>
+  function confirmDelete(id) {
+    if (confirm('Are you sure you want to delete this intern?')) {
+      // If the user confirms, redirect to the delete-intern URL with the intern ID
+      window.location.href = "/delete-intern/" + id + "/";
+    }
+  }
+</script>
+
+{% endblock  %}

@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <h2>Register</h2>
+
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" class="form-control" name="first_name" required pattern="^[A-Za-z][a-zA-Z ]*$"
+                title="Please enter a valid first name with only alphabets and the first letter capital."
+                oninput="validateName(this)">
+            <div class="invalid-feedback"></div>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="last_name" required pattern="^[A-Za-z][a-zA-Z ]*$"
+                title="Please enter a valid last name with only alphabets and the first letter capital."
+                oninput="validateName(this)">
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-group">
+            <label>User Name</label>
+            <input type="text" class="form-control" name="username" required pattern="^[A-Za-z0-9]+$"
+                title="Please enter a valid username with only alphanumeric characters." oninput="validateUsername(this)">
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <div class="input-group">
+                <input type="password" class="form-control" name="password" id="exampleInputPassword1" required
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                    title="Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character (@ $ ! % * ? &)."
+                    oninput="validatePassword(this)">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility()">
+                        <i id="eyeIcon" class="fa fa-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputConfirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" name="confirm_password" id="exampleInputConfirmPassword"
+                required oninput="validateConfirmPassword(this)">
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="form-group form-check">
+            <small id="emailHelp" class="form-text text-muted">If already registered, then <a href="/login/">Login</a></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("exampleInputPassword1");
+        var eyeIcon = document.getElementById("eyeIcon");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.classList.remove("fa-eye-slash");
+            eyeIcon.classList.add("fa-eye");
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.classList.remove("fa-eye");
+            eyeIcon.classList.add("fa-eye-slash");
+        }
+    }
+
+    function validateName(input) {
+        var nameValue = input.value;
+        var regex = /^[A-Z][a-zA-Z ]*$/;
+        if (!regex.test(nameValue)) {
+            input.setCustomValidity("Please enter a valid name with only alphabets and the first letter capital.");
+        } else {
+            input.setCustomValidity("");
+        }
+
+        if (/([a-zA-Z])\1{2}/.test(nameValue)) {
+            input.setCustomValidity("Name should not contain more than 2 repeating characters.");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
+    function validateUsername(input) {
+        var usernameValue = input.value;
+        var regex = /^[A-Za-z0-9]+$/;
+        if (!regex.test(usernameValue)) {
+            input.setCustomValidity("Please enter a valid username with only alphanumeric characters.");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
+    function validatePassword(input) {
+        var passwordValue = input.value;
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!regex.test(passwordValue)) {
+            input.setCustomValidity("Password must contain at least 8 characters, including one uppercase letter, one lowercase letter, one digit, and one special character (@ $ ! % * ? &).");
+        } else {
+            input.setCustomValidity("");
+        }
+
+        var confirmPasswordInput = document.getElementById("exampleInputConfirmPassword");
+        if (passwordValue !== confirmPasswordInput.value) {
+            confirmPasswordInput.setCustomValidity("Passwords do not match.");
+        } else {
+            confirmPasswordInput.setCustomValidity("");
+        }
+    }
+
+    function validateConfirmPassword(input) {
+        var confirmPasswordValue = input.value;
+        var passwordInput = document.getElementById("exampleInputPassword1").value;
+        if (confirmPasswordValue !== passwordInput) {
+            input.setCustomValidity("Passwords do not match.");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+</script>
+{% endblock %}

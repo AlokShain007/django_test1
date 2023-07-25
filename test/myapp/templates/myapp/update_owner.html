@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+
+  <form class="col-6 mx-auto card p-3 shadow-lg form-transparent" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="text-white">Update Owner Details</h2>
+    <hr>
+    <div class="mb-3">
+      <label class="form-label text-white">Owner Name</label>
+      <input required name="owner_name" value="{{ owner.owner_name }}" type="text" class="form-control shadow-effect text-white">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-white">Owner Details</label>
+      <!-- Corrected the name attribute here -->
+      <textarea required name="owner_details" class="form-control shadow-effect text-white">{{ owner.owner_details }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Update Owner</button>
+  </form>
+  
+</div>
+
+
+{% endblock %}

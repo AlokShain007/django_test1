@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mobiloitte Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('{% static "image/a.jpg" %}') no-repeat center center fixed; 
+            background-size: cover;
+        }
+
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background-color: #333;
+          padding: 10px;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 80px auto 30px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+            background-color: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            display: inline-block;
+        }
+
+        .description {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            display: inline-block;
+        }
+
+        .info {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: left;
+            color: #fff;
+        }
+
+        .buttons {
+            margin-top: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #888;
+        }
+
+        .table-transparent,
+        .form-transparent {
+          background-color: rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .shadow-effect {
+          background-color: rgba(255, 255, 255, 0.2) !important;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .text-white {
+          color: white !important;
+        }
+
+        .btn-danger {
+          background-color: #FF0000 !important;
+          font-size: 14px;
+          padding: 6px 12px;
+        }
+
+        .btn-success {
+          /* Fix the typo in the class name */
+          font-size: 14px;
+          padding: 6px 12px;
+        }
+
+        /* Media Query for Responsive Layout */
+        @media (max-width: 767px) {
+            .logo {
+                max-width: 200px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .description {
+                font-size: 16px;
+            }
+            .footer {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar bg">
+    <a class="navbar-brand" href="/">
+        <img src="https://www.mobiloitte.com/wp-content/uploads/2022/11/Mobiloitte_blue_logo.png" alt="Logo" height="30">
+    </a>
+    <form class="form-inline">
+        <a href="/" class="btn btn-outline-success my-2 my-sm-0" type="submit">Home</a>
+        {% if request.user.is_authenticated %}
+        <a href="/logout/" class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</a>
+        {% else %}
+        <a href="/login/" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</a>
+        {% endif%}
+    </form>
+  </nav>
+
+  <div class="container">
+    <img class="logo" src="https://www.mobiloitte.com/wp-content/uploads/2022/11/Mobiloitte_blue_logo.png" alt="Mobiloitte Logo">
+    <h1>Welcome to Mobiloitte</h1>
+    <p class="description">Empowering Businesses with Innovative Solutions</p>
+    {% block start %}
+    {% endblock %}
+  </div>
+    
+  <div class="footer">
+    © 2023 Mobiloitte. All rights reserved.
+  </div>
+    
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

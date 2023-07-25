@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-5">
+
+  <form class="col-6 mx-auto card p-3 shadow-lg form-transparent" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="text-white">Update Intern Details</h2>
+    <hr>
+    <div class="mb-3">
+      <label class="form-label text-white">Intern Name</label>
+      <input required name="intern_name" value="{{intern.intern_name}}" type="text" class="form-control shadow-effect text-white">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label text-white">Intern Details</label>
+      <textarea required name="intern_details" class="form-control shadow-effect text-white">{{intern.intern_details}}</textarea>
+    </div>
+    <input type="hidden" name="id_input" value="{{old_id}}">
+    <button type="submit" class="btn btn-success">Update Intern</button>
+  </form>
+  
+  
+{% endblock %}
